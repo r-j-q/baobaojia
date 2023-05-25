@@ -16,15 +16,17 @@ export default defineConfig({
     })
   ],
   resolve: {
+    extensions: ['.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
     alias: {
       "@": "/src",
-      "@api":"/src/store",
-      "@store":"/src/store",
-      "@router":"/src/router"
-    },
-    extensions: ['.js', '.ts', '.jsx', '.tsx', '.json', '.vue']
+      "@api": "/src/store",
+      "@store": "/src/store",
+      "@router": "/src/router",
+      "@views": "/src/views"
+    }
+
   },
-   
+
   server: {
     host: 'localhost',
     port: 3000,

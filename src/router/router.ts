@@ -1,11 +1,15 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import {AppRoutertes} from "@/router/route"
-
+import { createRouter, createWebHistory } from 'vue-router'
+import { AppRoutes } from "@/router/route"
+import { beforeEach, afterEach } from "@/router/guards"
 export const AppRouter = createRouter({
-   history: createWebHashHistory(),
-   routes: AppRoutertes,
+   history: createWebHistory(),
+   routes: AppRoutes,
 })
-// AppRouter.beforeEach()
+
 
 
  
+AppRouter.beforeEach(await beforeEach);
+AppRouter.afterEach(afterEach);
+
+

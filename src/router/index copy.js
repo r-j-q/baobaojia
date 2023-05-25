@@ -1,10 +1,10 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import Home from "../view/Home.vue";
-import Login from "../view/login.vue";
-import Rigester from "../view/rigester.vue";
+import Home from "../views/Home.vue";
+import Login from "../views/login.vue";
+import Rigester from "../views/rigester.vue";
 import { userGlobalUserStore } from "../store/userGlobalUserStore"
 
-const Router = createRouter({
+export const AppRouter = createRouter({
    history: createWebHashHistory(),
    routes: [
       {
@@ -25,7 +25,7 @@ const Router = createRouter({
       }
    ],
 })
-Router.beforeEach((to, from, next: any) => {
+AppRouter.beforeEach((to, from, next: any) => {
    
     
    if(to.path !== "/login"){
@@ -45,4 +45,4 @@ Router.beforeEach((to, from, next: any) => {
 		return;
 	} 
 })
-export default Router;
+     
