@@ -9,9 +9,17 @@
  <!-- npm install -D unplugin-vue-components unplugin-auto-import -->
 
 <!-- npm install node-sass --save-dev -->
+<!-- npm i @types/node -D   https://juejin.cn/post/7154251870221926431-->
+<!-- npm install -D sass sass-loader  -->
  <!-- axios封装 -->
 
  <!-- 基于vite设置代理 -->
 
 
  <!-- 基于vite环境变量 -->
+
+
+<!-- h5支付成功 跳转app -->
+ <!-- src\utils\index.html  -->
+
+ <!--uniapp静默升级配置 https://blog.csdn.net/qq_42611074/article/details/129039459 -->
