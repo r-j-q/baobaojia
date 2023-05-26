@@ -21,3 +21,5 @@
 
 <!-- h5支付成功 跳转app -->
  <!-- src\utils\index.html  -->
+
+ <!--uniapp静默升级配置 https://blog.csdn.net/qq_42611074/article/details/129039459 -->
