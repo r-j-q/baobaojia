@@ -1,5 +1,5 @@
 
-import { userGlobalUserStore } from "../store/userGlobalUserStore"
+import { userGlobalUserStore } from "@/store/userGlobalUserStore"
 
 
 export async function beforeEach(to: any, next: any) {

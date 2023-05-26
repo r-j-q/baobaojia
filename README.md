@@ -9,6 +9,8 @@
  <!-- npm install -D unplugin-vue-components unplugin-auto-import -->
 
 <!-- npm install node-sass --save-dev -->
+<!-- npm i @types/node -D   https://juejin.cn/post/7154251870221926431-->
+<!-- npm install -D sass sass-loader  -->
  <!-- axios封装 -->
 
  <!-- 基于vite设置代理 -->
