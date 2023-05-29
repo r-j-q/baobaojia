@@ -2,7 +2,7 @@
   <div class="container">
     <div class="container-left">
       <div class="container-title">XXXX</div>
-      <el-menu active-text-color="#ffd04b" background-color="#545c64" class="el-menu-vertical-demo" default-active="1"
+      <el-menu active-text-color="#ffd04b" :background-color="bgColor" class="el-menu-vertical-demo" default-active="1"
         text-color="#fff" :collapse="leftMenuOpen" @open="handleOpen" @close="handleClose">
         <el-sub-menu index="1">
           <template #title>
@@ -40,11 +40,8 @@
             <el-menu-item index="1">首页 </el-menu-item>
             <el-sub-menu index="2">
               <template #title>切换皮肤</template>
-              <el-menu-item index="2-4-1">颜色主题</el-menu-item>
-              <el-menu-item index="2-4-2">绿色主题</el-menu-item>
-              <el-menu-item index="2-4-3">蓝色主题</el-menu-item>
-              <el-menu-item index="2-4-4">黑色主题</el-menu-item>
-              <el-menu-item index="2-4-5">灰色主题</el-menu-item>
+              <el-menu-item index="2-4-1">灰色主题</el-menu-item> 
+              <el-menu-item index="2-4-2">蓝色主题</el-menu-item> 
             </el-sub-menu>
             <el-sub-menu index="3">
               <template #title>管理员</template>
@@ -63,9 +60,11 @@
   
 <script lang="ts" setup>
 import { ref } from 'vue'
-
+import {useThemeStore} from "@/store/useThemeStore"
 let activeIndex1 = ref('1');
 let leftMenuOpen = ref(false);
+const  {bgColor} = useThemeStore();
+console.log('useThemeStore',bgColor);
 
 
 import {
@@ -83,6 +82,7 @@ const handleClose = (key: string, keyPath: string[]) => {
 const handleAnimation = () => {
   leftMenuOpen.value = !leftMenuOpen.value; 
 }
+
 </script>
   
 <style scoped lang="scss">
@@ -113,7 +113,7 @@ const handleAnimation = () => {
       height: 60px;
       display: flex;
       // flex-direction: row-reverse;
-      background-color: rgb(84, 92, 100);
+      background-color: #545c64;
       align-items: center;
       justify-content: space-between;
 
