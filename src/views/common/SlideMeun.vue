@@ -17,12 +17,12 @@ import SlideMeunItem from "@/views/common/SlideMeunItem.vue"
 //     Location,
 //     Setting,
 // } from '@element-plus/icons-vue'
-const handleOpen = (key: string, keyPath: string[]) => {
-    console.log(key, keyPath)
-}
-const handleClose = (key: string, keyPath: string[]) => {
-    console.log(key, keyPath)
-}
+// const handleOpen = (key: string, keyPath: string[]) => {
+//     console.log(key, keyPath)
+// }
+// const handleClose = (key: string, keyPath: string[]) => {
+//     console.log(key, keyPath)
+// }
 
 const SlideMeunItemList = ref([
     {
@@ -33,12 +33,15 @@ const SlideMeunItemList = ref([
             {
                 name: "侧边栏1",
                 path: "/home1",
-                id: 1 - 1
+                id: '1-1',
+                chidlren:[]
             },
             {
-                name: "侧边栏1",
+                name: "侧边栏2",
                 path: "/home1",
-                id: 1 - 1
+                id: '1-2',
+                chidlren:[]
+
             }
         ]
     },
@@ -49,7 +52,9 @@ const SlideMeunItemList = ref([
         chidlren: [
             {
                 name: "侧边栏2",
-                path: "/home2"
+                path: "/home2",
+                id: '2-1',
+                chidlren:[]
             }
         ]
     },
@@ -57,9 +62,7 @@ const SlideMeunItemList = ref([
         id: 3,
         path: "/home3",
         name: "name3",
-        chidlren: [
-
-        ]
+        chidlren: [ ]
     }
 ])
 </script>
