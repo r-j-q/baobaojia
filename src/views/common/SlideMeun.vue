@@ -2,7 +2,7 @@
     <el-scrollbar height="100%">
         <el-menu default-active="1" text-color="#fff" background-color="#545c64" active-text-color="red"
             :unique-opened="true" class="el-menu-vertical-demo"  >
-            <SlideMeunItem v-for="item in SlideMeunItemList" :key="item.id" :data="item" />
+            <SlideMeunItem v-for="item in SlideMeunItemList" :key="item.id" :menu-options="item" />
         </el-menu>
     </el-scrollbar>
 </template>
@@ -29,17 +29,22 @@ const SlideMeunItemList = ref([
         id: 1,
         path: "/home1",
         name: "name1",
+        icon:"",
         chidlren: [
             {
                 name: "侧边栏1",
                 path: "/home1",
                 id: '1-1',
-                chidlren:[]
+                chidlren:[],
+        icon:"",
+
             },
             {
                 name: "侧边栏2",
                 path: "/home1",
                 id: '1-2',
+        icon:"",
+
                 chidlren:[]
 
             }
@@ -49,10 +54,14 @@ const SlideMeunItemList = ref([
         id: 2,
         path: "/home2",
         name: "name2",
+        icon:"",
+
         chidlren: [
             {
                 name: "侧边栏2",
                 path: "/home2",
+        icon:"",
+
                 id: '2-1',
                 chidlren:[]
             }
@@ -61,7 +70,8 @@ const SlideMeunItemList = ref([
     {
         id: 3,
         path: "/home3",
-        name: "name3",
+        name: "name3",   icon:"",
+
         chidlren: [ ]
     }
 ])
