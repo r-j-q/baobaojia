@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="container-left">
+    <div class="container-left" :style="{backgroundColor:bgColor}">
       <div class="container-title">XXXX</div>
       <el-menu active-text-color="#ffd04b" :background-color="bgColor" class="el-menu-vertical-demo" default-active="1"
         text-color="#fff" :collapse="leftMenuOpen" @open="handleOpen" @close="handleClose">
@@ -27,7 +27,7 @@
       </el-menu>
     </div>
     <div class="container-right">
-      <div class="container-top">
+      <div class="container-top" :style="{backgroundColor:bgColor}">
         <div class="icon-style" @click="handleAnimation">
           <el-icon size="20">
             <Fold v-if="!leftMenuOpen"/> 
@@ -35,13 +35,14 @@
            </el-icon>
         </div>
         <div class="container-top-center">
-          <el-menu :default-active="activeIndex1" class="el-menu-demo" mode="horizontal" background-color="#545c64"
+          <el-menu :default-active="activeIndex1" class="el-menu-demo" mode="horizontal" :background-color="bgColor"
             text-color="#fff" active-text-color="#ffd04b">
             <el-menu-item index="1">首页 </el-menu-item>
             <el-sub-menu index="2">
               <template #title>切换皮肤</template>
-              <el-menu-item index="2-4-1">灰色主题</el-menu-item> 
-              <el-menu-item index="2-4-2">蓝色主题</el-menu-item> 
+              <el-menu-item index="2-4-1" @click="handlebgColor('#545c64')">灰色主题</el-menu-item> 
+              <el-menu-item index="2-4-2" @click="handlebgColor('black')">黑色主题</el-menu-item> 
+              <el-menu-item index="2-4-3" @click="handlebgColor('blue')">蓝色主题</el-menu-item> 
             </el-sub-menu>
             <el-sub-menu index="3">
               <template #title>管理员</template>
@@ -59,12 +60,16 @@
 </template>
   
 <script lang="ts" setup>
-import { ref } from 'vue'
+import {  ref } from 'vue'
 import {useThemeStore} from "@/store/useThemeStore"
 let activeIndex1 = ref('1');
 let leftMenuOpen = ref(false);
-const  {bgColor} = useThemeStore();
-console.log('useThemeStore',bgColor);
+// 设置全局背景颜色
+const  {bgColor,changColor} = useThemeStore(); 
+const handlebgColor =(v:string) =>{
+  changColor(v) 
+}
+ 
 
 
 import {
@@ -82,6 +87,7 @@ const handleClose = (key: string, keyPath: string[]) => {
 const handleAnimation = () => {
   leftMenuOpen.value = !leftMenuOpen.value; 
 }
+ 
 
 </script>
   
@@ -92,7 +98,7 @@ const handleAnimation = () => {
   display: flex;
 
   .container-left {
-    background-color: rgb(84, 92, 100);
+    // background-color: rgb(84, 92, 100);
 
     .container-title {
       text-align: center;
@@ -113,7 +119,7 @@ const handleAnimation = () => {
       height: 60px;
       display: flex;
       // flex-direction: row-reverse;
-      background-color: #545c64;
+      // background-color: #545c64;
       align-items: center;
       justify-content: space-between;
 
