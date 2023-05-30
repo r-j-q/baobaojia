@@ -48,11 +48,13 @@ const showStatus = (code: number, info: string) => {
   }
   return `${message}，请检查网络或联系管理员！`
 }
-
+// let token = userGlobalUserStore()?.userInfo?.token;
 const service = axios.create({
   baseURL: import.meta.env.VITE_BASE_API,
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json' 
+
+ 
   },
   // 是否跨站点访问控制请求
   withCredentials: false,
@@ -122,13 +124,14 @@ export const clearPending = () => {
 
 // 请求拦截器
 service.interceptors.request.use((config: any) => {
+  let token = userGlobalUserStore().userInfo.token;
   removePending(config) // 在请求开始前，对之前的请求做检查取消操作
   addPending(config) // 将当前请求添加到 pending 中
-  let token = userGlobalUserStore().userInfo.token;
-  console.log('token',token);
-  
-  if(token){
-    config.headers.Authorization = `${token}`;
+ 
+  console.log('token', token);
+
+  if (token) {
+    config.headers.token = `${token}`;
   }
   return config
 }, (error) => {

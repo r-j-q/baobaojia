@@ -4,6 +4,9 @@ import App from './App.vue'
 import  {AppRouter} from "./router/index"
 import 'element-plus/dist/index.css' 
 import { createPinia } from 'pinia'
+import ElementPlus from "element-plus"
+import locale from 'element-plus/es/locale/lang/zh-cn'
+ 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 const pinia = createPinia()
@@ -22,7 +25,8 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 //         }
 //     },
 // });
-
+// 配置分页因为改为中文
+app.use(ElementPlus, {locale})
 app.use(pinia) 
 app.use(AppRouter)
 app.mount('#app') 

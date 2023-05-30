@@ -68,6 +68,7 @@
             <Fold v-if="!leftMenuOpen" />
             <Expand v-if="leftMenuOpen" />
           </el-icon>
+          <!--面包屑 https://blog.csdn.net/m0_47195133/article/details/125251104  -->
           <!-- <el-breadcrumb separator="/" style="color: #fff;">
             <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item> 
           </el-breadcrumb> -->
@@ -311,7 +312,7 @@ const items = [
       flex: 1;
       background-color: #fff;
       margin: 10px;
-      border: 1px solid #f5f5f5;
+      // border: 1px solid #f5f5f5;
       border-radius: 5px;
     }
   }
