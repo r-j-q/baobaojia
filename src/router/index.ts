@@ -1,6 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import Home from "@/views/Home.vue";
-import Login from "@/views/login.vue";
+import Home from "@/views/Home.vue"; 
 import Rigester from "@/views/rigester.vue";
 import { userGlobalUserStore } from "@/store/userGlobalUserStore"
 
@@ -8,20 +7,78 @@ export const AppRouter = createRouter({
     history: createWebHashHistory(),
     routes: [
         {
-            path: "/login",
-            name: "login",
-            component: Login
+            path: '/',
+            name: 'Home',
+            component: Home,
+            children: [
+                {
+                    path: '/dashboard',
+                    name: 'dashboard',
+                    meta: {
+                        title: '系统首页',
+                        permiss: '1',
+                    },
+                    component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard.vue'),
+                },
+                {
+                    path: '/import',
+                    name: 'import',
+                    meta: {
+                        title: '导入Excel',
+                        permiss: '2',
+                    },
+                    component: () => import(/* webpackChunkName: "import" */ '@/views/import.vue'),
+                },
+                {
+                    path: '/importList',
+                    name: 'importList',
+                    meta: {
+                        title: '导入Excel',
+                        permiss: '2',
+                    },
+                    component: () => import(/* webpackChunkName: "import" */ '@/views/importList.vue'),
+                },
+                {
+                    path: '/importList2',
+                    name: 'importList2',
+                    meta: {
+                        title: '导入Excel',
+                        permiss: '2',
+                    },
+                    component: () => import(/* webpackChunkName: "import" */ '@/views/importList2.vue'),
+                },
+                {
+                    path: '/importList1',
+                    name: 'importList1',
+                    meta: {
+                        title: '导入Excel',
+                        permiss: '2',
+                    },
+                    component: () => import(/* webpackChunkName: "import" */ '@/views/importList1.vue'),
+                },
+                 
+            ]
+        },
+        {
+            path: '/login',
+            name: 'Login',
+            meta: {
+                title: '登录',
+            },
+            component: () => import(/* webpackChunkName: "login" */ '@/views/login.vue'),
+        },
+        {
+            path: '/403',
+            name: '403',
+            meta: {
+                title: '没有权限',
+            },
+            component: () => import(/* webpackChunkName: "403" */ '../views/403.vue'),
         },
         {
             path: "/rigester",
             name: "rigester",
             component: Rigester
-        },
-
-        {
-            path: "/",
-            name: "home",
-            component: Home
         }
     ],
 })

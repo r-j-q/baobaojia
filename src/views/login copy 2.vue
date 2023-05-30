@@ -72,8 +72,7 @@ const jumpTo = () => {
 </script>
 
 <template>
-    <div class="login-wrap"> 
-    <div class="login-container  ">
+    <div class="login-container">
         <!-- <ThemeSwitch class="theme-switch" /> -->
         <div class="login-card">
             <div class="title">
@@ -115,16 +114,9 @@ const jumpTo = () => {
             </div>
         </div>
     </div>
-    </div>
 </template>
 
 <style  scoped  lang="scss" >
-.login-wrap { 
-	width: 100vw;
-	height: 100vh;
-	background-image: url(../assets/img/login-bg.jpg);
-	background-size: 100%;
-}
 .login-container {
     display: flex;
     justify-content: center;

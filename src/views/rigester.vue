@@ -75,24 +75,25 @@ const jumpTo = () => {
 </script>
 
 <template>
-    <div class="login-container">
-        <!-- <ThemeSwitch class="theme-switch" /> -->
-        <div class="login-card">
-            <div class="title">
-                注册
-                <!-- <img src="@/assets/layout/logo-text-2.png" /> -->
-            </div>
-            <div class="content">
-                <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" @keyup.enter="handleLogin">
-                    <el-form-item prop="username" label="请输入账号">
-                        <el-input v-model.trim="loginForm.username" placeholder="用户名" type="text" tabindex="1"
-                            :prefix-icon="User" size="large" />
-                    </el-form-item>
-                    <el-form-item prop="password" label="请输入密码">
-                        <el-input v-model.trim="loginForm.password" placeholder="密码" type="password" tabindex="2"
-                            :prefix-icon="Lock" size="large" show-password />
-                    </el-form-item>
-                    <!-- <el-form-item prop="code">
+    <div class="login-wrap">
+        <div class="login-container">
+            <!-- <ThemeSwitch class="theme-switch" /> -->
+            <div class="login-card">
+                <div class="title">
+                    <h3>注册</h3>
+                    <!-- <img src="@/assets/layout/logo-text-2.png" /> -->
+                </div>
+                <div class="content">
+                    <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" @keyup.enter="handleLogin">
+                        <el-form-item prop="username" label="请输入账号">
+                            <el-input v-model.trim="loginForm.username" placeholder="用户名" type="text" tabindex="1"
+                                :prefix-icon="User" size="large" />
+                        </el-form-item>
+                        <el-form-item prop="password" label="请输入密码">
+                            <el-input v-model.trim="loginForm.password" placeholder="密码" type="password" tabindex="2"
+                                :prefix-icon="Lock" size="large" show-password />
+                        </el-form-item>
+                        <!-- <el-form-item prop="code">
                         <el-input v-model.trim="loginForm.code" placeholder="验证码" type="text" tabindex="3"
                             :prefix-icon="Key" maxlength="7" size="large">
                             <template #append>
@@ -111,15 +112,24 @@ const jumpTo = () => {
                             </template>
                         </el-input>
                     </el-form-item> -->
-                    <el-button :loading="loading" type="primary" size="large" @click.prevent="handleLogin"> 登 录 </el-button>
-                </el-form>
-                <div class="register" @click="jumpTo">已有账号，去登录></div>
+                        <el-button :loading="loading" type="primary" size="large" @click.prevent="handleLogin"> 登 录
+                        </el-button>
+                    </el-form>
+                    <div class="register" @click="jumpTo">已有账号，去登录></div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
-<style  scoped>
+<style  scoped  lang="scss">
+.login-wrap {
+    width: 100vw;
+    height: 100vh;
+    background-image: url(../assets/img/login-bg.jpg);
+    background-size: 100%;
+}
+
 .login-container {
     display: flex;
     justify-content: center;

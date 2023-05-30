@@ -2,6 +2,7 @@
 import axios, { AxiosRequestConfig } from 'axios'
 import * as qs from 'qs'
 import { ElMessage } from 'element-plus'
+import { userGlobalUserStore } from "@/store/userGlobalUserStore"
 
 const showStatus = (code: number, info: string) => {
   let message = ''
@@ -123,10 +124,12 @@ export const clearPending = () => {
 service.interceptors.request.use((config: any) => {
   removePending(config) // 在请求开始前，对之前的请求做检查取消操作
   addPending(config) // 将当前请求添加到 pending 中
-  // let token = localStorage.getItem('token')
-  // if(token){
-  //   config.headers.Authorization = `${token}`;
-  // }
+  let token = userGlobalUserStore().userInfo.token;
+  console.log('token',token);
+  
+  if(token){
+    config.headers.Authorization = `${token}`;
+  }
   return config
 }, (error) => {
   // 错误抛到业务代码
