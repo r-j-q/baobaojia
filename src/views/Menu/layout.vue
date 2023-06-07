@@ -138,13 +138,17 @@ const items = [
   {
     icon: 'Calendar',
     index: '1',
-    title: '表格相关',
+    title: '分类管理',
     permiss: '1',
     subs: [
-
+    {
+        index: '/importOneList',
+        title: '分类列表',
+        permiss: '2',
+      },
       {
         index: '/import',
-        title: '添加列表',
+        title: '一级分类列表',
         permiss: '2',
       },
       {

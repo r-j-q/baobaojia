@@ -21,10 +21,20 @@ export const AppRouter = createRouter({
                     component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard.vue'),
                 },
                 {
+                    path: '/importOneList',
+                    name: 'importOneList',
+                    meta: {
+                        title: '新增分类',
+                        permiss: '1',
+                    },
+                    component: () => import(/* webpackChunkName: "dashboard" */ '@/views/importOneList.vue'),
+                },
+                 
+                {
                     path: '/import',
                     name: 'import',
                     meta: {
-                        title: '导入Excel',
+                        title: '一级分类列表',
                         permiss: '2',
                     },
                     component: () => import(/* webpackChunkName: "import" */ '@/views/import.vue'),

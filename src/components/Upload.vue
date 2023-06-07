@@ -11,12 +11,12 @@
             action="http://mw.shningmi.com/upload"
             multiple
             list-type="picture-card"
-            :file-list="fileList"
             :on-change="handle"
             :headers="headers"
         >
-        <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-    <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+        <!-- :file-list="fileList" 图片回显 -->
+        <!-- <img v-if="imageUrl" :src="imageUrl" class="avatar" /> -->
+    <el-icon   class="avatar-uploader-icon"><Plus /></el-icon>
         <!--  :data="importData" -->
             <!-- <el-icon class="el-icon--upload"><upload-filled /></el-icon>
             <div class="el-upload__text">
@@ -40,17 +40,20 @@ import { Plus } from '@element-plus/icons-vue'
 import {ref} from "vue"; 
  const fileList =ref([{
     name:  new Date(),   //如果没有name,可以自己随便定义
-      url:  "http://mw.shningmi.com/storage/topic/20230530/127d059d7a75a565388e3d8f669d807a.png",
+      url:  "",
 
  }])
 // const { proxy } : any = getCurrentInstance();
+const emits = defineEmits(['handlePrent'])
 const handle =   (rawFile: any) => { 
+   let proxy =  JSON.parse(JSON.stringify(rawFile));
+   emits('handlePrent', proxy.response?.data.url)
 
-    let proxy =  JSON.parse(JSON.stringify(rawFile));
     console.log("rawFile=====>",  proxy.response?.data.url);
 }; 
 const headers =ref({"token":  userGlobalUserStore().userInfo.token})
 
+ 
  
 </script>
 
