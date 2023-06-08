@@ -2,7 +2,7 @@
     <el-card class="box-card">
         <template #header>
             <div class="card-header">
-                <el-button class="button" type="primary" @click="handleClassification">添加分类</el-button>
+                <el-button class="button" type="primary" @click="handleClassification">新增分类</el-button>
             </div>
 
         </template>
@@ -55,8 +55,8 @@
                 </el-table-column>
                 <el-table-column fixed="right" label="操作" align="center">
                     <template #default="scope">
-                        <el-button link type="primary" :icon="Edit" @click="handleEdit(scope.row, scope.$index)">编辑
-                        </el-button>
+                        <!-- <el-button link type="primary" :icon="Edit" @click="handleEdit(scope.row, scope.$index)">编辑
+                        </el-button> -->
                         <el-popconfirm title="确定要删除吗？" @confirm="handleDelete(scope.row, scope.$index)"
                             confirm-button-text="确定" cancel-button-text="再想想">
                             <template #reference>
@@ -264,17 +264,29 @@ const getDataOne = () => {
 }
 
 // 点击了编辑
-const handleEdit = (data: any, index: any) => {
-    console.log('handleEdit', data, index);
-};
+// const handleEdit = (data: any, index: any) => {
+
+
+// ruleForm.name=data.name;
+// ruleForm.pid=data.pid;
+// ruleForm.image=data.image;
+// ruleForm.status=data.status;
+//     handleClassification()
+//     console.log('handleEdit', data, index);
+// };
 
 // 点击了删除
 const handleDelete = (data: any, index: any) => {
     console.log('handleDelete', data, index);
+    service('/lst', {
+        method: 'post',
+        data: { id: data.id },
+    }).then((res: any) => {
+        getData()
+        console.log("==res===>", res)
+    })
 };
-// onload(()=>{
-//     getData()
-// })
+
 getDataOne()
 
 const getData = () => {

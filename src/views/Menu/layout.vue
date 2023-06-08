@@ -129,12 +129,12 @@ const handleAnimation = () => {
   leftMenuOpen.value = !leftMenuOpen.value;
 }
 const items = [
-  // {
-  //     icon: 'Odometer',
-  //     index: '/dashboard',
-  //     title: '系统首页',
-  //     permiss: '1',
-  // },
+  {
+      icon: 'Odometer',
+      index: '/dashboard',
+      title: '系统首页',
+      permiss: '1',
+  },
   {
     icon: 'Calendar',
     index: '1',
@@ -164,16 +164,20 @@ const items = [
     title: '报价管理',
     permiss: '3',
     subs: [
-
+    {
+        index: '/siteInformation',
+        title: '场地信息',
+        permiss: '4',
+      },
       {
         index: '/quotation',
         title: '编辑报价',
-        permiss: '4',
+        permiss: '5',
       },
       {
         index: '/importList2',
         title: '报价详情',
-        permiss: '5',
+        permiss: '6',
       },
     ],
   },

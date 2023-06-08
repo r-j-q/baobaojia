@@ -65,7 +65,17 @@ export const AppRouter = createRouter({
                         permiss: '2',
                     },
                     component: () => import(/* webpackChunkName: "import" */ '@/views/quotation.vue'),
+                },{
+                    path: '/siteInformation',
+                    name: 'siteInformation',
+                    meta: {
+                        title: '场地信息',
+                        permiss: '2',
+                    },
+                    component: () => import(/* webpackChunkName: "import" */ '@/views/siteInformation.vue'),
                 },
+
+                 
                  
             ]
         },

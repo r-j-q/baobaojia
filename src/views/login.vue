@@ -45,7 +45,7 @@ const handleLogin = () => {
                 },
             }).then((res: any) => {
                 setGlobalStoreInfo.userInfo = res.data;
-                router.push({ path: "/" })
+                router.push({ path: "/dashboard" })
             })
 
         } else {
