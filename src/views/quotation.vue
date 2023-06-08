@@ -1,5 +1,5 @@
 <template>
-    <el-card class="box-card">
+    <el-card class="box-card box-card-card">
         <template #header>
             <div class="card-header">
                 <span>编辑报价</span>
@@ -17,10 +17,10 @@
 
                         </div>
                     </template>
-                    <div>
+                    <div  >
                         <div class="templateList">
 
-                            <div v-if="quotationList.getListSiteData.length > 0" class="templateListChild">
+                            <div v-if="quotationList.getListSiteData.length > 0" class="templateListChild ">
                                 <span :class="items.active ? 'isActive' : ''"
                                     v-for="(items, index) in quotationList.getListSiteData"
                                     @click="handleQuotation(items, index)" class="templateListChildSpan">
@@ -43,7 +43,7 @@
 
                             </div>
                             <div v-else>
-                                <center>暂无分类数据</center>
+                                <center>暂无场地数据</center>
                             </div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
             <el-col :span="18">
                 <div style="margin-left: 10px;">
                     <el-card class="box-card" shadow="naver">
-                        <el-card class="box-card-style" style="border: none;" v-for="item in quotationList.dataList">
+                        <el-card v-if="quotationList.dataList.length>0" class="box-card-style" style="border: none;" v-for="item in quotationList.dataList">
                             <template #header>
                                 <div class="card-header-style">
                                     <span> 报价信息：【<b>{{ item.name }}</b>】</span>
@@ -61,6 +61,9 @@
 
                             </template>
                         </el-card>
+
+                        <div v-else class="box-card-style colorF5"> <center>暂无场地信息</center></div>
+                        
                         <!-- <span class="dialog-footer-button">
                             <el-button type="primary" @click="submitForm(ruleFormRef)"> 保存</el-button>
                         </span> -->
@@ -215,6 +218,11 @@ const handleQuotation = (item: any, index: any) => {
 
 .box-card-style {
     margin-bottom: 10px;
+     /* height: calc('100vh-200px'); */
+     height: calc(70vh);
+}
+.el-card{
+    height: calc(70vh);
 }
 
 .templateListTitle {
@@ -285,5 +293,11 @@ const handleQuotation = (item: any, index: any) => {
 }
 .font12{
     font-size: 12px;
+}
+.colorF5{
+    color: #ccc;
+}
+.box-card-card{
+    padding-bottom: 100px;
 }
 </style>
