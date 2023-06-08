@@ -58,13 +58,13 @@ export const AppRouter = createRouter({
                     component: () => import(/* webpackChunkName: "import" */ '@/views/importList2.vue'),
                 },
                 {
-                    path: '/importList1',
-                    name: 'importList1',
+                    path: '/quotation',
+                    name: 'quotation',
                     meta: {
-                        title: '导入Excel',
+                        title: '报价设置',
                         permiss: '2',
                     },
-                    component: () => import(/* webpackChunkName: "import" */ '@/views/importList1.vue'),
+                    component: () => import(/* webpackChunkName: "import" */ '@/views/quotation.vue'),
                 },
                  
             ]

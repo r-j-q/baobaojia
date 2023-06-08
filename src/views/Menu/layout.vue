@@ -151,28 +151,28 @@ const items = [
         title: '一级分类列表',
         permiss: '2',
       },
-      {
-        index: '/importList',
-        title: '列表管理',
-        permiss: '3',
-      },
+      // {
+      //   index: '/importList',
+      //   title: '列表管理',
+      //   permiss: '3',
+      // },
     ],
   },
   {
     icon: 'Calendar',
     index: '2',
-    title: '表格相关',
+    title: '报价管理',
     permiss: '3',
     subs: [
 
       {
-        index: '/importList1',
-        title: '添加列表',
+        index: '/quotation',
+        title: '编辑报价',
         permiss: '4',
       },
       {
         index: '/importList2',
-        title: '列表管理',
+        title: '报价详情',
         permiss: '5',
       },
     ],
