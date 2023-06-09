@@ -20,9 +20,11 @@
                     </template>
                 </el-table-column>
                 <el-table-column label="图片">
+         
                     <template #default="scope">
                         <el-image style="width: 60px;height: 60px;" :src="scope.row.image"
                             :preview-src-list="[scope.row.image]" hide-on-click-modal="true" preview-teleported="true">
+                           
                             <template #error>
                                 <div class="image-slot">
                                     <el-icon>

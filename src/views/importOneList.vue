@@ -12,20 +12,32 @@
                 <el-table-column type="expand">
                     <template #default="props">
                         <el-row :gutter="20" class="classStyle" style="margin-left: 4%;margin-bottom: 10px;"
-                            v-for="item in props.row.child">
-                            <el-col :span="6" class="classStyle">名称: {{ item.name }}</el-col>
-                            <el-col :span="6" class="classStyle">状态: {{ item.state == 200 ? "启用" : "禁用" }}</el-col>
-                            <el-col :span="6" class="classStyle" v-if="item.image">图片:
-                                <el-image style="width: 50px;height: 50px;" :src="item.image"
-                                    :preview-src-list="[item.image]" hide-on-click-modal="true" preview-teleported="true">
-                                    <template #error>
-                                        <div class="image-slot">
-                                            <el-icon>
-                                                <user />
-                                            </el-icon>
-                                        </div>
-                                    </template>
+                            v-for="items in props.row.child">
+                            <el-col :span="6" class="classStyle">名称: {{ items.name }}</el-col>
+                            <el-col :span="6" class="classStyle">状态: {{ items.status == 200 ? "启用" : "禁用" }}</el-col>
+                            <el-col :span="6" class="classStyle">图片:
+
+                                <el-image style="width: 20px;height: 20px;" :src="items.image || getImageUrl"
+                                    :preview-src-list="[items.image || getImageUrl]" hide-on-click-modal="true"
+                                    preview-teleported="true">
+
                                 </el-image>
+
+                            </el-col>
+                            <el-col :span="6" class="classStyle">
+
+                                <!-- <el-button link type="primary" :icon="Edit" @click="handleEdit(scope.row, scope.$index)">编辑
+                        </el-button> -->
+                                <el-popconfirm title="确定要删除吗？" @confirm="handleDelete(items, '')" confirm-button-text="确定"
+                                    cancel-button-text="再想想">
+                                    <template #reference>
+                                        <el-button link type="danger">删除
+                                        </el-button>
+                                    </template>
+                                </el-popconfirm>
+                                <slot name="operations" v-bind="items"></slot>
+
+                                <!-- <el-button class="button" text @click="handleClassification">删除</el-button> -->
 
                             </el-col>
                         </el-row>
@@ -41,15 +53,9 @@
                 </el-table-column>
                 <el-table-column label="图片" prop="image">
                     <template #default="scope">
-                        <el-image style="width: 30px;height: 30px;" :src="scope.row.image"
-                            :preview-src-list="[scope.row.image]" hide-on-click-modal="true" preview-teleported="true">
-                            <template #error>
-                                <div class="image-slot">
-                                    <el-icon>
-                                        <user />
-                                    </el-icon>
-                                </div>
-                            </template>
+                        <el-image style="width: 30px;height: 30px;" :src="scope.row.image || getImageUrl"
+                            :preview-src-list="[scope.row.image || getImageUrl]" hide-on-click-modal="true"
+                            preview-teleported="true">
                         </el-image>
                     </template>
                 </el-table-column>
@@ -109,9 +115,11 @@ import { ref, reactive, nextTick } from "vue";
 import service from '@/utils/http.ts';
 import { Delete, Edit } from '@element-plus/icons-vue';
 // import { useRouter } from "vue-router"
-
+import getImageUrl from "../assets/img/zwt.png"
 import Upload from "@/components/Upload.vue"
 import type { FormInstance, FormRules } from 'element-plus'
+import { ElMessage } from 'element-plus'
+
 const centerDialogVisible = ref(false)
 const tableListOne = ref([])
 const tableList = ref([]);
@@ -167,13 +175,23 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 }
 // 添加分类   
 const handleCreate = () => {
-    ruleForm.status == true ? 200 : 300;
+
+    let ruleFormStatus = ruleForm.status == true ? 200 : 300;
+
+
+    // console.log("ruleForm",ruleFormStatus);
+
+
     service('/create', {
         method: 'post',
-        data: { ...ruleForm },
+        data: {
+            ...ruleForm,
+            status: ruleFormStatus
+        },
     }).then((res: any) => {
         tableList.value = res.data;
         centerDialogVisible.value = false;
+        ElMessage.success(res.info)
         getData()
     })
 }
@@ -265,8 +283,6 @@ const getDataOne = () => {
 
 // 点击了编辑
 // const handleEdit = (data: any, index: any) => {
-
-
 // ruleForm.name=data.name;
 // ruleForm.pid=data.pid;
 // ruleForm.image=data.image;
@@ -278,10 +294,11 @@ const getDataOne = () => {
 // 点击了删除
 const handleDelete = (data: any, index: any) => {
     console.log('handleDelete', data, index);
-    service('/lst', {
+    service('/delCate', {
         method: 'post',
         data: { id: data.id },
     }).then((res: any) => {
+        ElMessage.success(res.info)
         getData()
         console.log("==res===>", res)
     })

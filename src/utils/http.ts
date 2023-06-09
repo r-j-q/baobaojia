@@ -8,7 +8,7 @@ const showStatus = (code: number, info: string) => {
   let message = ''
   switch (code) {
     case 200:
-      ElMessage.success(info)
+      // ElMessage.success(info)
       break
     case 201:
       ElMessage.warning(info)

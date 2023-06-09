@@ -47,9 +47,9 @@ import {ref} from "vue";
 const emits = defineEmits(['handlePrent'])
 const handle =   (rawFile: any) => { 
    let proxy =  JSON.parse(JSON.stringify(rawFile));
-   emits('handlePrent', proxy.response?.data.url)
+   emits('handlePrent', proxy.response?.data.path)
 
-    console.log("rawFile=====>",  proxy.response?.data.url);
+    console.log("rawFile=====>",  proxy.response?.data.path);
 }; 
 const headers =ref({"token":  userGlobalUserStore().userInfo.token})
 

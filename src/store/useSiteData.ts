@@ -1,5 +1,5 @@
 
-import { ref } from 'vue';
+import { ref,reactive } from 'vue';
 import { defineStore } from 'pinia';
 // import { ElMessage } from 'element-plus'
 
@@ -7,6 +7,9 @@ export const useSiteData = defineStore('siteData', () => {
 
     const dataList = ref<any>([]);
     const getListSiteData = ref<any>([]);
+    const customData = ref<any>([{lable:"",defaultValue:""}]);
+    const objD = reactive<any>( {lable:"",defaultValue:""});
+    
     const setSiteData = (va:any,v: any) => {
         getListSiteData.value = va;
         dataList.value = v;
@@ -15,5 +18,11 @@ export const useSiteData = defineStore('siteData', () => {
       const getSiteData = (v: any) => {
         getListSiteData.value = v;
       }
-    return { dataList, setSiteData,getListSiteData,getSiteData }
+
+    // 自定义表单内容
+    const customFromData = () =>{ 
+      customData.value.push(objD)
+    }
+
+    return { dataList, setSiteData,getListSiteData,getSiteData,customData,customFromData }
 }, { persist: true })

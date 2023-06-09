@@ -1,44 +1,37 @@
 <template>
     <el-card class="box-card">
         <template #header>
-            <div class="card-header"> 
+            <div class="card-header">
                 <el-button class="button" type="primary" @click="handleSiteInformation">新增场地信息</el-button>
-             </div>
+            </div>
         </template>
-        <el-table :data="tableList"   style="width: 100%" class="heightStyle"
-                 >
-                
-                <el-table-column label="场地位置" prop="name" />
-                <el-table-column label="场地图片" prop="image">
-                    <template #default="scope">
-                        <el-image style="width: 30px;height: 30px;" :src="scope.row.image"
-                            :preview-src-list="[scope.row.image]" hide-on-click-modal="true" preview-teleported="true">
-                            <template #error>
-                                <div class="image-slot">
-                                    <el-icon>
-                                        <user />
-                                    </el-icon>
-                                </div>
-                            </template>
-                        </el-image>
-                    </template>
-                </el-table-column>
-                <el-table-column label="备注" prop="name" />
-                <el-table-column fixed="right" label="操作" align="center">
-                    <template #default="scope">
-                        <!-- <el-button link type="primary" :icon="Edit" @click="handleEdit(scope.row, scope.$index)">编辑
-                        </el-button> -->
-                        <el-popconfirm title="确定要删除吗？" @confirm="handleDelete(scope.row, scope.$index)"
-                            confirm-button-text="确定" cancel-button-text="再想想">
-                            <template #reference>
-                                <el-button link type="danger" :icon="Delete">删除
-                                </el-button>
-                            </template>
-                        </el-popconfirm>
-                        <slot name="operations" v-bind="scope.row"></slot>
-                    </template>
-                </el-table-column>
-            </el-table>
+        <el-table :data="tableList" style="width: 100%" class="heightStyle">
+
+            <el-table-column label="场地位置" prop="name" />
+            <el-table-column label="场地图片" prop="image">
+                <template #default="scope">
+                    <el-image style="width: 30px;height: 30px;" :src="scope.row.image || getImageUrl"
+                        :preview-src-list="[scope.row.image || getImageUrl]" hide-on-click-modal="true"
+                        preview-teleported="true">
+                    </el-image>
+                </template>
+            </el-table-column>
+            <el-table-column label="备注" prop="remark" />
+            <el-table-column fixed="right" label="操作" align="center">
+                <template #default="scope">
+                    <el-button link type="primary" @click="handleEdit(scope.row, scope.$index)">编辑
+                    </el-button>
+                    <el-popconfirm title="确定要删除吗？" @confirm="handleDelete(scope.row, scope.$index)" confirm-button-text="确定"
+                        cancel-button-text="再想想">
+                        <template #reference>
+                            <el-button link type="danger">删除
+                            </el-button>
+                        </template>
+                    </el-popconfirm>
+                    <slot name="operations" v-bind="scope.row"></slot>
+                </template>
+            </el-table-column>
+        </el-table>
     </el-card>
 
     <!-- <div>
@@ -49,18 +42,18 @@
     <el-dialog v-model="centerDialogVisible" :close-on-click-modal="false" title="新增场地信息" width="70%" left>
         <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="120px" class="demo-ruleForm"
             :size="formSize" status-icon>
-             
+
             <el-form-item label="场地位置：" prop="name">
                 <el-input v-model="ruleForm.name" />
             </el-form-item>
 
             <el-form-item label="场地图片：" prop="image">
-                <Upload @handlePrent="handlePrent" />
+                <UploadFileList @handlePrent="handlePrent" :fileList="fileList" />
             </el-form-item>
-            <el-form-item label="备注：" prop="desc" >
-                <el-input v-model="ruleForm.desc"  type="textarea" />
+            <el-form-item label="备注：" prop="remark">
+                <el-input v-model="ruleForm.remark" type="textarea" />
             </el-form-item>
-            
+
         </el-form>
         <template #footer>
             <span class="dialog-footer">
@@ -72,22 +65,28 @@
 </template>
 
 <script setup lang="ts" name="import">
-import { ref,reactive } from "vue";
-import type {FormInstance,   FormRules } from 'element-plus'
-// import service from '@/utils/http.ts'
-// const ruleForm = ref([]);
+import { ref, reactive } from "vue";
+import type { FormInstance, FormRules } from 'element-plus'
+import service from '@/utils/http.ts'
+const ruleFormRef = ref<FormInstance>()
+import { ElMessage } from 'element-plus'
+import getImageUrl from "../assets/img/zwt.png"
+// import { addListener } from "process";
+
+const siteId = ref('');
+const addSite = ref('');
 const centerDialogVisible = ref(false);
 const tableList = ref([]);
- 
+const fileList = ref<any>([])
 const formSize = ref('default')
 const ruleForm = reactive({
-    name: '', 
+    name: '',
     image: '',
-    desc:""
+    remark: ""
 })
 
 
- 
+
 const rules = reactive<FormRules>({
     name: [
         { required: true, message: '请输入场地名称', trigger: 'blur' }
@@ -98,7 +97,7 @@ const rules = reactive<FormRules>({
             message: '请上传场地图片',
             trigger: 'blur',
         },
-    ] 
+    ]
 })
 
 // 新增场地信息验证
@@ -107,35 +106,93 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     await formEl.validate((valid, fields) => {
         if (valid) {
             console.log('submit!')
-           
+            addSite.value == 'edit' ? editSite() : createSite()
+
         } else {
             console.log('error submit!', fields)
         }
     })
 }
 const handlePrent = (url: any) => {
-    // ruleForm.image = url
+    ruleForm.image = url
     console.log("url", url)
 }
 // import getImageUrl from "../assets/img/zwt.png"
 
- 
-// const getDataOne = () => {
-//     service('/lst', {
-//         method: 'post',
-//         data: {},
-//     }).then((res: any) => {
-//         tableList.value = res.data;
-//         console.log("==res===>", tableList.value)
-//     })
-// }
-// getDataOne()
-// const handleQuotation = (item:any) =>{
-//     console.log("===item=====>",item)
-// }
+const handleEdit = (item: any) => {
+    addSite.value = 'edit'
+    // const ruleForm = reactive({
+    // name: '',
+    // image: '',
+    // remark: ""
+    // })
+    fileList.value = [{
+        name: new Date(),   //如果没有name,可以自己随便定义
+        url: item.image,
 
-const handleSiteInformation = () =>{
-    centerDialogVisible.value =true
+    }]
+    siteId.value = item.id
+    ruleForm.name = item.name
+    ruleForm.remark = item.remark
+    centerDialogVisible.value = true
+
+}
+const createSite = () => {
+
+    service('/createSite', {
+        method: 'post',
+        data: { ...ruleForm },
+    }).then((res: any) => {
+        getListSite()
+        ElMessage.success(res.info)
+        centerDialogVisible.value = false
+
+    })
+}
+const editSite = () => {
+
+    service('/editSite', {
+        method: 'post',
+        data: { ...ruleForm, id: siteId.value },
+    }).then((res: any) => {
+        getListSite()
+        ElMessage.success(res.info)
+        centerDialogVisible.value = false
+
+    })
+}
+
+const getListSite = () => {
+    service('/listSite', {
+        method: 'post',
+        data: {
+            "page": "1",
+            "limit": "20"
+        },
+    }).then((res: any) => {
+        const { data } = res.data;
+        tableList.value = data;
+
+        console.log("==res===>", tableList.value)
+    })
+}
+getListSite()
+// 点击了删除
+const handleDelete = (data: any, index: any) => {
+    console.log('handleDelete', data, index);
+    service('/delSite', {
+        method: 'post',
+        data: { id: data.id },
+    }).then((res: any) => {
+        ElMessage.success(res.info)
+        getListSite()
+        console.log("==res===>", res)
+    })
+};
+
+const handleSiteInformation = () => {
+    addSite.value = 'add'
+    centerDialogVisible.value = true
 }
 </script>
 
