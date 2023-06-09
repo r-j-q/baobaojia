@@ -7,8 +7,9 @@ export const useSiteData = defineStore('siteData', () => {
 
     const dataList = ref<any>([]);
     const getListSiteData = ref<any>([]);
-    const customData = ref<any>([{lable:"",defaultValue:""}]);
     const objD = reactive<any>( {lable:"",defaultValue:""});
+    const customData = ref<any>([objD]);
+    
     
     const setSiteData = (va:any,v: any) => {
         getListSiteData.value = va;
@@ -22,6 +23,7 @@ export const useSiteData = defineStore('siteData', () => {
     // 自定义表单内容
     const customFromData = () =>{ 
       customData.value.push(objD)
+      // location.reload()
     }
 
     return { dataList, setSiteData,getListSiteData,getSiteData,customData,customFromData }

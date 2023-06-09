@@ -56,7 +56,7 @@
                         <template #header>
                             <div class="card-header-style">
                                 <span> 报价信息：【<b>{{ item.name }}</b>】</span>
-                                <el-button @click="handleEdit(item)" type="primary" plain>编辑</el-button>
+                                <!-- <el-button @click="handleEdit(item)" type="primary" plain>编辑</el-button> -->
                             </div>
                         </template>
                     </el-card>
@@ -75,8 +75,13 @@
 
 
     <!-- 侧边 -->
-    <el-drawer ref="drawerRef" v-model="dialog" :with-header="false" :before-close="handleClose" direction="ltr" size="80%">
-        <div class="titleBottom">{{ title }}</div>
+    <el-drawer ref="drawerRef" v-model="dialog" :with-header="false" :before-close="handleClose" direction="rtl" size="80%">
+        <div class="titleBottom">
+            <div>{{ title }}</div>
+             <el-icon size="20" color="#dcdfe6" @click="cancelForm" class="cus">
+                <Close />
+            </el-icon>
+        </div>
         <div class="demo-drawer__content">
             <el-form :model="form">
                 <el-row :gutter="20">
@@ -100,10 +105,10 @@
                     </el-col>
                     <el-col :span="8" class="countStyleBack">
                         <el-form-item label="名称：" prop="name">
-                            <el-input   v-model="quotationList.customData[countStyle].lable" />
+                            <el-input v-model="quotationList.customData[countStyle].lable" />
                         </el-form-item><br />
                         <el-form-item label="内容：" prop="name">
-                            <el-input   v-model="quotationList.customData[countStyle].defaultValue" />
+                            <el-input v-model="quotationList.customData[countStyle].defaultValue" />
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="countStyleBack0">
@@ -118,7 +123,7 @@
                     <el-col :span="6" v-for="(itm, index) in quotationList.customData">
                         <el-form-item :class="countStyle == index ? 'formItemStyleClick' : 'formItemStyleClickf5'"
                             @click="handleFormChange(itm, index)" :label="itm.lable" :label-width="formLabelWidth">
-                            <el-input disabled readonly v-model="itm.defaultValue" autocomplete="off" />
+                            <el-input disabled   v-model="itm.defaultValue" autocomplete="off" />
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -148,22 +153,24 @@ import service from '@/utils/http.ts'
 import getImageUrl from "../assets/img/zwt.png"
 import { useSiteData } from "@/store/useSiteData"
 import { ElDrawer } from 'element-plus'
-import { CirclePlus } from '@element-plus/icons-vue'
+import { CirclePlus ,Close} from '@element-plus/icons-vue'
 const seleteValue = ref()
- 
+// const refresh = inject<any>("inject");
+
+// 下面这行代码写在你需要reload的地方
 
 const seleteData = [
-  {
-    value: '1',
-    label: 'Level one 1',
-    children: [
-      {
-        value: '1-1',
-        label: 'Level two 1-1' 
-      },
-    ],
-  }
- ]
+    {
+        value: '1',
+        label: 'Level one 1',
+        children: [
+            {
+                value: '1-1',
+                label: 'Level two 1-1'
+            },
+        ],
+    }
+]
 const siteData = ref({});
 const title = ref('');
 const siteImage = ref('');
@@ -176,14 +183,14 @@ const countStyle = ref<any>(0);
 
 // 新增输入框
 const handleAddQuotation = () => {
-    loading.value = true
-    dialog.value = true
-    clearTimeout(timer.value)
-   quotationList.customFromData();
- }
+    
+    quotationList.customFromData();
+//  console.log(typeof refresh())
+   
+}
 
 const handleFormChange = (itm: any, index: any) => {
-  
+
     countStyle.value = index;
     console.log(itm, index);
 }
@@ -285,7 +292,16 @@ const handleEdit = (item: any) => {
 //     // })
 // }
 const handleQuotation = (item: any, index: any) => {
-    quotationList.getListSiteData[index].active = !quotationList.getListSiteData[index].active
+    quotationList.getListSiteData.forEach((itema: any, ind: any) => {
+        if (index === ind) {
+            quotationList.getListSiteData[ind].active = true
+        } else {
+            quotationList.getListSiteData[ind].active = false
+        }
+        console.log('error submit!', itema)
+    })
+    handleEdit(item)
+    // quotationList.getListSiteData[index].active = !quotationList.getListSiteData[index].active
     siteData.value = item;
     quotationList.setSiteData(quotationList.getListSiteData, quotationList.getListSiteData.filter((item: any) => item.active === true))
 
@@ -424,6 +440,10 @@ const handleQuotation = (item: any, index: any) => {
 .titleBottom {
     margin-bottom: 20px;
     font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .demo-drawer__footer {
@@ -463,7 +483,7 @@ const handleQuotation = (item: any, index: any) => {
 
 ::v-deep(.formItemStyleClick > .el-form-item__label) {
     color: #000;
-background-color: #f5f5f5;
+    background-color: #f5f5f5;
 }
 
 ::v-deep(.formItemStyleClickf5 > .el-form-item__label) {
@@ -474,4 +494,8 @@ background-color: #f5f5f5;
 
 ::v-deep(.el-form-item__label) {
     color: #fff;
-}</style>
+}
+.cus {
+    cursor: pointer;
+}
+</style>
